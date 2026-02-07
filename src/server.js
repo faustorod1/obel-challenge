@@ -1,16 +1,11 @@
-import express from 'express';
+import app from './app.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const app = express();
-app.use(express.json());
-
-app.get('/health', (req, res) => {
-  res.json({ status: 'Obel Challenge API is alive' });
-});
-
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
-  console.log(`Servidor en puerto ${PORT}`);
+  console.log(`Obel Challenge API corriendo en http://localhost:${PORT}`);
+  console.log(`Documentación en http://localhost:${PORT}/docs`);
 });
