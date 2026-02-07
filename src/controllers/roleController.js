@@ -1,4 +1,5 @@
 import * as roleService from '../services/roleService.js';
+import { ROLE_TYPES } from '../utils/roles.js';
 
 export const getRoles = (req, res) => {
   const roles = roleService.getAllRoles();
@@ -6,18 +7,50 @@ export const getRoles = (req, res) => {
 };
 
 export const postRole = (req, res) => {
+  let { name, description, type, scope } = req.body;
+
+  name = name?.trim();
+  description = description?.trim();
+
+  if (!name || typeof name !== 'string' || name === "") {
+    return res.status(400).json({ 
+      message: "El nombre del rol es obligatorio y debe ser un texto válido." 
+    });
+  }
+
+  if (type && !ROLE_TYPES.includes(type)) {
+    return res.status(400).json({ 
+      message: `El tipo de rol no es válido. Opciones: ${ROLE_TYPES.join(', ')}` 
+    });
+  }
+
+  if (scope && !ROLE_SCOPES.includes(scope)) {
+  return res.status(400).json({ 
+    message: `El scope no es válido. Opciones: ${ROLE_SCOPES.join(', ')}` 
+  });
+}
+
   try {
-    const newRole = roleService.createRole(req.body);
-    res.status(201).json(newRole);
+    const result = roleService.createRole({ name, description, type, scope });
+
+    if (result.error) {
+      return res.status(409).json({ message: result.error });
+    }
+
+    res.status(201).json(result);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: "Error interno del servidor" });
   }
 };
 
 export const putRole = (req, res) => {
-  const updated = roleService.updateRole(req.params.id, req.body);
-  if (!updated) return res.status(404).json({ message: "Rol no encontrado" });
-  res.json(updated);
+  const result = roleService.updateRole(req.params.id, req.body);
+  
+  if (result.error) {
+    return res.status(result.status).json({ message: result.error });
+  }
+
+  res.json(result.data);
 };
 
 export const getRoleById = (req, res) => {
@@ -29,4 +62,16 @@ export const getRoleById = (req, res) => {
   }
 
   res.status(200).json(role);
+};
+
+export const deleteRole = (req, res) => { //Funcionalidad Extra
+  const { id } = req.params;
+  
+  const result = roleService.deleteRole(id);
+
+  if (result.error) {
+    return res.status(result.status).json({ message: result.error });
+  }
+
+  res.status(200).json({ message: "Rol eliminado y desasignado de todos los usuarios con éxito" });
 };

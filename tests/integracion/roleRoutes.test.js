@@ -2,7 +2,7 @@ import request from 'supertest';
 import app from '../../src/app.js';
 
 describe('Role API Endpoints', () => {
-  const token = '12345';
+  const token = process.env.AUTH_TOKEN || '12345';
 
   test('GET /api/roles debería fallar sin token de autorización', async () => {
     const res = await request(app).get('/api/roles');

@@ -8,5 +8,5 @@ router.get('/', authMiddleware, roleController.getRoles);
 router.post('/', authMiddleware, roleController.postRole);
 router.put('/:id', authMiddleware, roleController.putRole);
 router.get('/:id', authMiddleware, roleController.getRoleById);
-
+router.delete('/:id', authMiddleware, roleController.deleteRole);
 export default router;

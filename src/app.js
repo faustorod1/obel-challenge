@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import roleRoutes from './routes/roleRoutes.js';
 import userRoutes from './routes/userRoutes.js';
