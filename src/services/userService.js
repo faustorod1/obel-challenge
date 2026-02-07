@@ -16,12 +16,36 @@ export const assignRoleToUser = (userId, roleId, allRoles) => {
   return { user };
 };
 
-export const removeRoleFromUser = (userId, roleId) => {
+export const removeRoleFromUser = (userId, roleId, allRoles) => {
   const user = users.find(u => u.id === userId);
-  if (!user) return false;
+  
+  if (!user) {
+    return { error: "Usuario no encontrado" };
+  }
+
+  const roleExists = allRoles.some(r => r.id === roleId);
+  if (!roleExists) {
+    return { error: "El Rol especificado no existe en el sistema" };
+  }
+  /**
+ * IMPORTANCIA DE ESTA VALIDACIÓN:
+ * Si bien no es posible que un usuario tenga asignado un rol inexistente...
+ * 1. Evita estados inconsistentes donde el cliente cree 
+ * haber modificado una relación que nunca existió.
+ * Ejemplo: quizo desasignarle a un usuario el rol de id "123" pero tipeó "122".
+ * 2. Permite Diferenciar entre "el rol no existe" y 
+ * "el usuario no posee ese rol" permite al administrador detectar errores 
+ * de escritura vs. errores de lógica de permisos.
+ */
+
+  const hasRole = user.assignedRoles.includes(roleId);
+  if (!hasRole) {
+    return { error: "El usuario no tiene asignado ese rol" };
+  }
 
   user.assignedRoles = user.assignedRoles.filter(id => id !== roleId);
-  return true;
+  
+  return { success: true };
 };
 
 export const getUserRoles = (userId, allRoles) => {

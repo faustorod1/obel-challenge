@@ -20,10 +20,10 @@ export const assignRole = (req, res) => {
 export const unassignRole = (req, res) => {
   const { userId, roleId } = req.body;
 
-  const success = userService.removeRoleFromUser(userId, roleId);
+  const result = userService.removeRoleFromUser(userId, roleId, roles);
   
-  if (!success) {
-    return res.status(404).json({ message: "Usuario no encontrado o error en la operación" });
+  if (result.error) {
+    return res.status(404).json({ message: result.error });
   }
 
   res.status(200).json({ message: "Asignación eliminada con éxito" });
