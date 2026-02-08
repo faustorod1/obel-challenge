@@ -9,7 +9,14 @@ const options = {
       description: 'API robusta para la gestión de roles y asignación de usuarios con integridad referencial.',
     },
     servers: [
-      { url: 'http://localhost:3000', description: 'Servidor Local' },
+      { 
+        url: process.env.RENDER_EXTERNAL_URL || 'http://localhost:3000', 
+        description: 'Servidor Activo' 
+      },
+      { 
+        url: 'http://localhost:3000', 
+        description: 'Servidor de Desarrollo Local' 
+      }
     ],
     components: {
       securitySchemes: {
