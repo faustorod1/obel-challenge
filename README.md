@@ -39,6 +39,15 @@ Para mejorar la experiencia de testing y ofrecer una solución más completa y f
 * **GET /api/users:** Permite visualizar la lista completa de usuarios y verificar en tiempo real la asignación de roles e integridad de los datos.
 * **DELETE /api/roles/{id}:** Implementado para demostrar la lógica de **Borrado en Cascada**. Al eliminar un rol, el sistema busca y limpia automáticamente dicha referencia en todos los usuarios vinculados.
 
+## ⚠️ Manejo de Errores y Códigos de Estado
+Para garantizar una integración fluida con cualquier Front-End, la API responde con códigos HTTP estandarizados:
+* 200 OK / 201 Created: Petición exitosa.
+* 400 Bad Request: Error de validación (ej: nombre de rol faltante o JSON mal formado).
+* 401 Unauthorized: Token de seguridad faltante o inválido.
+* 404 Not Found: El recurso solicitado (Rol o Usuario) no existe.
+* 409 Conflict: Error de lógica de negocio por duplicidad (ej: intentar crear un rol con un nombre que ya existe en el sistema).
+* 500 Internal Server Error: Error inesperado del servidor (blindado mediante un middleware de error global).
+
 ## 🔑 Seguridad y Acceso
 La API está protegida por un middleware de autenticación.
 - **Header:** `Authorization`
