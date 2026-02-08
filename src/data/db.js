@@ -12,8 +12,15 @@ export const roles = [
     id: uuidv4(),
     name: "Visualizador",
     description: "Solo lectura de datos",
-    type: "viewer",
+    type: "staff",
     scope: "global"
+  },
+  {
+    id: uuidv4(),
+    name: "Contribuyente",
+    description: "Acceso parcial al sistema",
+    type: "user",
+    scope: "local"
   }
 ];
 
