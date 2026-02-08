@@ -6,6 +6,7 @@ import swaggerUi from 'swagger-ui-express';
 import { specs } from './swagger.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { verifyToken } from './middlewares/authMiddleware.js';
 
 const app = express();
 
@@ -25,8 +26,8 @@ app.use((err, req, res, next) => {
   next();
 });
 
-app.use('/api/roles', roleRoutes);
-app.use('/api/users', userRoutes);
+app.use('/api/roles', verifyToken, roleRoutes);
+app.use('/api/users', verifyToken, userRoutes);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.get('/', (req, res) => {
