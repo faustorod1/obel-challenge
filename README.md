@@ -58,5 +58,11 @@ Si deseas correr el proyecto en tu máquina:
     npm start
     ```
 
+## 🧪 Tests
+El proyecto incluye tests unitarios y de integración para asegurar la estabilidad de los endpoints principales. Para ejecutarlos, utiliza el comando: 
+```bash
+npm test
+```
+
 ## 👤 Autor
 Fausto Rodríguez
