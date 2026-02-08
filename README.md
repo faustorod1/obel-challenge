@@ -11,12 +11,18 @@ La API se encuentra hosteada en Render y puedes acceder a la interfaz de usuario
 * **Documentación:** Swagger UI / OpenAPI 3.0
 * **Arquitectura:** Patrón por capas (Controllers, Services, Middlewares, Routes)
 * **Seguridad:** Autenticación por Token (Bearer)
+* **Persistencia:** Almacenamiento In-Memory (volátil)
 
 ## 🏗️ Arquitectura y Buenas Prácticas
 - **Integridad Referencial:** Al eliminar un rol, el sistema limpia automáticamente las referencias en todos los usuarios (Borrado en Cascada).
 - **Validación Estricta:** Implementación de RegEx para nombres de roles (evita caracteres especiales y solo números).
 - **Manejo de Errores Global:** Blindaje contra errores 500 y validación de sintaxis JSON malformada.
 - **Inyección de Dependencias:** El Service se encarga de la lógica, permitiendo que el Controller sea agnóstico a la implementación de los datos.
+
+## ✨ Mejoras y Endpoints Adicionales
+Para mejorar la experiencia de testing y ofrecer una solución más completa y funcional, se incluyeron endpoints que no estaban en los requerimientos originales:
+* **GET /api/users:** Permite visualizar la lista completa de usuarios y verificar en tiempo real la asignación de roles e integridad de los datos.
+* **DELETE /api/roles/{id}:** Implementado para demostrar la lógica de **Borrado en Cascada**. Al eliminar un rol, el sistema busca y limpia automáticamente dicha referencia en todos los usuarios vinculados.
 
 ## 🔑 Seguridad y Acceso
 La API está protegida por un middleware de autenticación.
