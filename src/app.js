@@ -6,7 +6,16 @@ import swaggerUi from 'swagger-ui-express';
 import { specs } from './swagger.js';
 
 const app = express();
-app.use(express.json());
+app.use(express.json({ limit: '10kb' }));
+
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    return res.status(400).json({ 
+      message: "El cuerpo de la petición no es un JSON válido. Revisá comas o palabras mal escritas." 
+    });
+  }
+  next();
+});
 
 app.use('/api/roles', roleRoutes);
 app.use('/api/users', userRoutes);

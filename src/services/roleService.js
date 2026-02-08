@@ -40,8 +40,18 @@ if (data.name) {
     }
   }
 
-  roles[index] = { ...roles[index], ...data };
+  const updatedData = {};
+  Object.keys(data).forEach(key => {
+    if (data[key] !== undefined && data[key] !== null) {
+      updatedData[key] = data[key];
+    }
+  });
 
+  roles[index] = { 
+    ...roles[index], 
+    ...updatedData, 
+    id: roles[index].id
+  };
   return { success: true, data: roles[index] };
 };
 

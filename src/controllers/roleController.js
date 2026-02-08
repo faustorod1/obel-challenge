@@ -1,5 +1,5 @@
 import * as roleService from '../services/roleService.js';
-import { ROLE_TYPES } from '../utils/roles.js';
+import { ROLE_TYPES, ROLE_SCOPES } from '../utils/roles.js';
 
 export const getRoles = (req, res) => {
   const roles = roleService.getAllRoles();
@@ -44,7 +44,32 @@ export const postRole = (req, res) => {
 };
 
 export const putRole = (req, res) => {
-  const result = roleService.updateRole(req.params.id, req.body);
+  const { id } = req.params;
+
+  if (!req.body || Object.keys(req.body).length === 0) {
+    return res.status(400).json({ 
+      message: "No se enviaron datos para actualizar. El cuerpo de la petición no puede estar vacío." 
+    });
+  }
+
+  let { name, type, scope } = req.body;
+
+  if (req.body.hasOwnProperty('name')) {
+    name = name?.trim();
+    if (!name || name === "") {
+      return res.status(400).json({ message: "El nombre no puede quedar vacío." });
+    }
+  }
+
+  if (type && !ROLE_TYPES.includes(type)) {
+    return res.status(400).json({ message: `Tipo inválido. Opciones: ${ROLE_TYPES.join(', ')}` });
+  }
+
+  if (scope && !ROLE_SCOPES.includes(scope)) {
+    return res.status(400).json({ message: `Scope inválido. Opciones: ${ROLE_SCOPES.join(', ')}` });
+  }
+
+  const result = roleService.updateRole(id, { ...req.body, name });
   
   if (result.error) {
     return res.status(result.status).json({ message: result.error });
