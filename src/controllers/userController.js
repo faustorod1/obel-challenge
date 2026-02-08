@@ -40,7 +40,12 @@ export const assignRole = (req, res) => {
 };
 
 export const unassignRole = (req, res) => {
+  try {
   const { userId, roleId } = req.body;
+
+  if (!userId || !roleId) {
+      return res.status(400).json({ message: "userId y roleId son obligatorios" });
+  }
 
   const result = userService.removeRoleFromUser(userId, roleId, roles);
   
@@ -49,16 +54,23 @@ export const unassignRole = (req, res) => {
   }
 
   res.status(200).json({ message: "Asignación eliminada con éxito" });
+  } catch (error) {
+    res.status(500).json({ message: "Error interno del servidor" });
+  }
 };
 
 export const getUserRoles = (req, res) => {
-  const { id } = req.params;
-  
-  const userRoles = userService.getUserRoles(id, roles);
+  try{
+    const { id } = req.params;
+    
+    const userRoles = userService.getUserRoles(id, roles);
 
-  if (!userRoles) {
-    return res.status(404).json({ message: "Usuario no encontrado" });
+    if (!userRoles) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+
+    res.status(200).json(userRoles);
+  } catch (error) {
+    res.status(500).json({ message: "Error interno del servidor" });
   }
-
-  res.status(200).json(userRoles);
 };

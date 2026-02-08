@@ -30,7 +30,8 @@ const options = {
           security: [{ bearerAuth: [] }],
           responses: { 
             200: { description: 'Lista de roles obtenida con éxito' },
-            401: { description: 'No autorizado: Token faltante o inválido' }
+            401: { description: 'No autorizado: Token faltante o inválido' },
+            500: { description: 'Error interno del servidor' }
           }
         },
         post: {
@@ -58,7 +59,8 @@ const options = {
             201: { description: 'Rol creado' },
             400: { description: 'Datos inválidos' },
             401: { description: 'No autorizado: Token faltante o inválido' },
-            409: { description: 'Nombre de rol duplicado' }
+            409: { description: 'Nombre de rol duplicado' },
+            500: { description: 'Error interno del servidor' }
           }
         }
       },
@@ -71,7 +73,8 @@ const options = {
           responses: { 
             200: { description: 'Rol encontrado' }, 
             401: { description: 'No autorizado: Token faltante o inválido' },
-            404: { description: 'No encontrado' } 
+            404: { description: 'No encontrado' },
+            500: { description: 'Error interno del servidor' }
           }
         },
         put: {
@@ -100,7 +103,8 @@ const options = {
             400: { description: 'Error de validación (cuerpo vacío o tipos inválidos)' },
             401: { description: 'No autorizado: Token faltante o inválido' },
             404: { description: 'No se encontró el rol para actualizar' },
-            409: { description: 'Conflicto: El nuevo nombre ya está en uso por otro rol' }
+            409: { description: 'Conflicto: El nuevo nombre ya está en uso por otro rol' },
+            500: { description: 'Error interno del servidor' }
           }
         },
         delete: {
@@ -111,7 +115,8 @@ const options = {
           responses: {
             200: { description: 'Rol eliminado y desvinculado de usuarios' },
             401: { description: 'No autorizado: Token faltante o inválido' },
-            404: { description: 'El rol que intentas eliminar no existe' }
+            404: { description: 'El rol que intentas eliminar no existe' },
+            500: { description: 'Error interno del servidor' }
           }
         }
       },
@@ -123,7 +128,8 @@ const options = {
           security: [{ bearerAuth: [] }],
           responses: {
             200: { description: 'Lista de usuarios obtenida' },
-            401: { description: 'No autorizado' }
+            401: { description: 'No autorizado' },
+            500: { description: 'Error interno del servidor' }
           }
         }
       },
@@ -151,7 +157,8 @@ const options = {
             200: { description: 'Rol asignado correctamente' },
             400: { description: 'El usuario ya posee el rol o los datos son inválidos' },
             401: { description: 'No autorizado: Token faltante o inválido' },
-            404: { description: 'El usuario o el rol especificado no existen' }
+            404: { description: 'El usuario o el rol especificado no existen' },
+            500: { description: 'Error interno del servidor' }
           }
         }
       },
@@ -179,7 +186,8 @@ const options = {
             200: { description: 'Desasignado' },
             400: { description: 'El usuario no posee el rol especificado o los datos son inválidos' },
             401: { description: 'No autorizado: Token faltante o inválido' },
-            404: { description: 'Usuario o Rol no encontrado. O el usuario no tenía asignado ese rol' }
+            404: { description: 'Usuario o Rol no encontrado. O el usuario no tenía asignado ese rol' },
+            500: { description: 'Error interno del servidor' }
           }
         }
       },
@@ -192,7 +200,8 @@ const options = {
           responses: { 
             200: { description: 'Lista de roles del usuario' },
             401: { description: 'No autorizado: Token faltante o inválido' },
-            404: { description: 'Usuario no encontrado' }
+            404: { description: 'Usuario no encontrado' },
+            500: { description: 'Error interno del servidor' }
           }
         }
       }
