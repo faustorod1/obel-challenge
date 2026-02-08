@@ -13,6 +13,21 @@ La API se encuentra hosteada en Render y puedes acceder a la interfaz de usuario
 * **Seguridad:** Autenticación por Token (Bearer)
 * **Persistencia:** Almacenamiento In-Memory (volátil)
 
+## 🛠️ Funcionalidades de la API
+
+### 🎭 Gestión de Roles 
+* **GET /api/roles:** Lista todos los roles creados.
+* **POST /api/roles:** Crea un nuevo rol (Validación de nombre obligatoria).
+* **GET /api/roles/{id}:** Obtiene el detalle completo de un rol específico mediante su ID.
+* **PUT /api/roles/{id}:** Modifica los datos de un rol existente.
+* **DELETE /api/roles/{id}:** Elimina un rol y limpia sus referencias en los usuarios (Integridad Referencial). ✨
+
+### 👥 Usuarios y Asignaciones
+* **GET /api/users:** Lista todos los usuarios registrados en el sistema. ✨
+* **POST /api/users/assign:** Asigna un rol existente a un usuario.
+* **POST /api/users/unassign:** Remueve la asignación de un rol de un usuario.
+* **GET /api/users/{id}/roles:** Obtiene la lista detallada de roles asignados a un usuario específico
+
 ## 🏗️ Arquitectura y Buenas Prácticas
 - **Integridad Referencial:** Al eliminar un rol, el sistema limpia automáticamente las referencias en todos los usuarios (Borrado en Cascada).
 - **Validación Estricta:** Implementación de RegEx para nombres de roles (evita caracteres especiales y solo números).
@@ -64,5 +79,5 @@ El proyecto incluye tests unitarios y de integración para asegurar la estabilid
 npm test
 ```
 
-## 👤 Autor
+## 👨‍💻 Autor
 Fausto Rodríguez
