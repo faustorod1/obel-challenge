@@ -186,7 +186,7 @@ const options = {
             200: { description: 'Desasignado' },
             400: { description: 'El usuario no posee el rol especificado o los datos son inválidos' },
             401: { description: 'No autorizado: Token faltante o inválido' },
-            404: { description: 'Usuario o Rol no encontrado. O el usuario no tenía asignado ese rol' },
+            404: { description: 'Usuario o Rol no encontrado' },
             500: { description: 'Error interno del servidor' }
           }
         }
