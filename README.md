@@ -30,6 +30,7 @@ La API se encuentra hosteada en Render y puedes acceder a la interfaz de usuario
 
 ## 🏗️ Arquitectura y Buenas Prácticas
 - **Integridad Referencial:** Al eliminar un rol, el sistema limpia automáticamente las referencias en todos los usuarios (Borrado en Cascada).
+- **Validación Multicapa:** Se implementaron validaciones en las capas de Middleware, Controllers y Services, asegurando la integridad de los datos según su naturaleza (sintáctica, de seguridad o de negocio).
 - **Validación Estricta:** Implementación de RegEx para nombres de roles (evita caracteres especiales y solo números).
 - **Manejo de Errores Global:** Blindaje contra errores 500 y validación de sintaxis JSON malformada.
 - **Inyección de Dependencias:** El Service se encarga de la lógica, permitiendo que el Controller sea agnóstico a la implementación de los datos.
