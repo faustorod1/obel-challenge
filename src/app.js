@@ -6,7 +6,7 @@ import swaggerUi from 'swagger-ui-express';
 import { specs } from './swagger.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { verifyToken } from './middlewares/authMiddleware.js';
+import { verifyToken } from './middlewares/auth.js';
 
 const app = express();
 
