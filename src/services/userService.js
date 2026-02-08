@@ -1,5 +1,13 @@
 import { users } from '../data/db.js';
 
+export const getAllUsers = () => {
+  return users;
+};
+
+export const getUserById = (userId) => {
+  return users.find(u => u.id === userId);
+};
+
 export const assignRoleToUser = (userId, roleId, allRoles) => {
   const user = users.find(u => u.id === userId);
   if (!user) return { error: "Usuario no encontrado" };

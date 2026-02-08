@@ -86,10 +86,10 @@ const options = {
                 schema: {
                   type: 'object',
                   properties: {
-                    name: { type: 'string' },
-                    description: { type: 'string' },
-                    type: { type: 'string' },
-                    scope: { type: 'string' }
+                    name: { type: 'string', example: '' },
+                    description: { type: 'string', example: '' },
+                    type: { type: 'string', example: '' },
+                    scope: { type: 'string', example: '' }
                   }
                 }
               }
@@ -116,6 +116,17 @@ const options = {
         }
       },
       // --- ENDPOINTS DE USUARIOS ---
+      '/api/users': {
+        get: {
+          summary: 'Listar todos los usuarios del sistema',
+          tags: ['Users'],
+          security: [{ bearerAuth: [] }],
+          responses: {
+            200: { description: 'Lista de usuarios obtenida' },
+            401: { description: 'No autorizado' }
+          }
+        }
+      },
       '/api/users/assign': {
         post: {
           summary: 'Asignar un rol a un usuario',
@@ -166,7 +177,9 @@ const options = {
           },
           responses: { 
             200: { description: 'Desasignado' },
-            401: { description: 'No autorizado: Token faltante o inválido' }
+            400: { description: 'El usuario no posee el rol especificado o los datos son inválidos' },
+            401: { description: 'No autorizado: Token faltante o inválido' },
+            404: { description: 'Usuario o Rol no encontrado. O el usuario no tenía asignado ese rol' }
           }
         }
       },
@@ -178,7 +191,8 @@ const options = {
           parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'string' } }],
           responses: { 
             200: { description: 'Lista de roles del usuario' },
-            401: { description: 'No autorizado: Token faltante o inválido' }
+            401: { description: 'No autorizado: Token faltante o inválido' },
+            404: { description: 'Usuario no encontrado' }
           }
         }
       }

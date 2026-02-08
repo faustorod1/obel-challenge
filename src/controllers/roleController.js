@@ -12,9 +12,17 @@ export const postRole = (req, res) => {
   name = name?.trim();
   description = description?.trim();
 
+  const nameRegex = /^(?![0-9]+$)[a-zA-Z0-9\s]+$/;
+
   if (!name || typeof name !== 'string' || name === "") {
     return res.status(400).json({ 
       message: "El nombre del rol es obligatorio y debe ser un texto válido." 
+    });
+  }
+
+  if (!nameRegex.test(name)) {
+    return res.status(400).json({ 
+      message: "El nombre no puede ser solo números ni contener caracteres especiales." 
     });
   }
 
@@ -54,10 +62,17 @@ export const putRole = (req, res) => {
 
   let { name, type, scope } = req.body;
 
+  const nameRegex = /^(?![0-9]+$)[a-zA-Z0-9\s]+$/;
+
   if (req.body.hasOwnProperty('name')) {
     name = name?.trim();
     if (!name || name === "") {
       return res.status(400).json({ message: "El nombre no puede quedar vacío." });
+    }
+    if (!nameRegex.test(name)) {
+      return res.status(400).json({ 
+        message: "El nombre actualizado no puede ser solo números ni contener caracteres especiales." 
+      });
     }
   }
 
