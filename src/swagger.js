@@ -28,7 +28,10 @@ const options = {
           summary: 'Listar todos los roles',
           tags: ['Roles'],
           security: [{ bearerAuth: [] }],
-          responses: { 200: { description: 'Lista de roles obtenida con éxito' } }
+          responses: { 
+            200: { description: 'Lista de roles obtenida con éxito' },
+            401: { description: 'No autorizado: Token faltante o inválido' }
+          }
         },
         post: {
           summary: 'Crear un nuevo rol',
@@ -54,6 +57,7 @@ const options = {
           responses: {
             201: { description: 'Rol creado' },
             400: { description: 'Datos inválidos' },
+            401: { description: 'No autorizado: Token faltante o inválido' },
             409: { description: 'Nombre de rol duplicado' }
           }
         }
@@ -64,7 +68,11 @@ const options = {
           tags: ['Roles'],
           security: [{ bearerAuth: [] }],
           parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'string' } }],
-          responses: { 200: { description: 'Rol encontrado' }, 404: { description: 'No encontrado' } }
+          responses: { 
+            200: { description: 'Rol encontrado' }, 
+            401: { description: 'No autorizado: Token faltante o inválido' },
+            404: { description: 'No encontrado' } 
+          }
         },
         put: {
           summary: 'Actualizar un rol',
@@ -87,14 +95,24 @@ const options = {
               }
             }
           },
-          responses: { 200: { description: 'Actualizado' }, 404: { description: 'No encontrado' } }
+          responses: {
+            200: { description: 'Rol actualizado con éxito' },
+            400: { description: 'Error de validación (cuerpo vacío o tipos inválidos)' },
+            401: { description: 'No autorizado: Token faltante o inválido' },
+            404: { description: 'No se encontró el rol para actualizar' },
+            409: { description: 'Conflicto: El nuevo nombre ya está en uso por otro rol' }
+          }
         },
         delete: {
           summary: 'Eliminar un rol (Borrado en Cascada)',
           tags: ['Roles'],
           security: [{ bearerAuth: [] }],
           parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'string' } }],
-          responses: { 200: { description: 'Rol eliminado y desvinculado de usuarios' } }
+          responses: {
+            200: { description: 'Rol eliminado y desvinculado de usuarios' },
+            401: { description: 'No autorizado: Token faltante o inválido' },
+            404: { description: 'El rol que intentas eliminar no existe' }
+          }
         }
       },
       // --- ENDPOINTS DE USUARIOS ---
@@ -118,7 +136,12 @@ const options = {
               }
             }
           },
-          responses: { 200: { description: 'Asignado' }, 400: { description: 'Error en asignación' } }
+          responses: {
+            200: { description: 'Rol asignado correctamente' },
+            400: { description: 'El usuario ya posee el rol o los datos son inválidos' },
+            401: { description: 'No autorizado: Token faltante o inválido' },
+            404: { description: 'El usuario o el rol especificado no existen' }
+          }
         }
       },
       '/api/users/unassign': {
@@ -141,7 +164,10 @@ const options = {
               }
             }
           },
-          responses: { 200: { description: 'Desasignado' } }
+          responses: { 
+            200: { description: 'Desasignado' },
+            401: { description: 'No autorizado: Token faltante o inválido' }
+          }
         }
       },
       '/api/users/{id}/roles': {
@@ -150,7 +176,10 @@ const options = {
           tags: ['Users'],
           security: [{ bearerAuth: [] }],
           parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'string' } }],
-          responses: { 200: { description: 'Lista de roles del usuario' } }
+          responses: { 
+            200: { description: 'Lista de roles del usuario' },
+            401: { description: 'No autorizado: Token faltante o inválido' }
+          }
         }
       }
     }
